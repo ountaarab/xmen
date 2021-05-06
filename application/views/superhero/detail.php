@@ -50,8 +50,8 @@ $jk = $detail['jk'];
                             <td>Jenis Kelamin</td>
                             <td>
                                 <select class="form-control" name="jk">
-                                    <option value="l" <?php if($jk == 'l' || $jk == 'L'): echo " selected"; endif; ?>>Laki-laki</option>
-                                    <option value="p" <?php if($jk == 'p' || $jk == 'P'): echo " selected"; endif; ?>>Perempuan</option>
+                                    <option value="L" <?php if($jk == 'l' || $jk == 'L'): echo " selected"; endif; ?>>Laki-laki</option>
+                                    <option value="P" <?php if($jk == 'p' || $jk == 'P'): echo " selected"; endif; ?>>Perempuan</option>
                                 </select>
                             </td>
                         </tr>

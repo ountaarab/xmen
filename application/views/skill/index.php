@@ -42,6 +42,7 @@
     <div class="col-md-8">
         <a href="<?= base_url() ?>" class="btn btn-info">Superhero</a>
         <a href="<?= base_url('Skill') ?>" class="btn btn-warning">Skill</a>
+        <a href="<?= base_url('Simulasi') ?>" class="btn btn-primary">Simulasi</a>
     </div>
     <div class="col-md-2"></div>
 
