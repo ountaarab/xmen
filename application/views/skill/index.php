@@ -29,7 +29,7 @@
     <div class="col-md-8">
         <h1>X-MEN</h1>
         <p>
-            Ini adalah X-MEN, ini adalah tentang para pahlawan pembela bumi.
+            Ini adalah Skill X-MEN, ini adalah kemampuan para pahlawan pembela bumi.
         </p>
     </div>
     <div class="col-md-2"></div>
@@ -47,16 +47,16 @@
 
 </div>
 
-<!-- Daftar SuperHero Start -->
+<!-- Daftar Skill Start -->
 
 <div id="content_load">
 
 </div>
 
-<div class="row" id="superhero">
+<div class="row" id="skill">
 
 </div>
-<!-- Daftar SuperHero End -->
+<!-- Daftar Skill End -->
 
 <hr class="hr100"/>
 
@@ -76,22 +76,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <script>
     $( document ).ready(function() {
-        get_superhero();
+        get_skill();
     });
 
-    function get_superhero()
+    function get_skill()
     {
-        $('#superhero').html('');
-        $.get("<?= base_url('Superhero/get/all') ?>", function (result) {
-          $('#superhero').html(result);
+        $('#skill').html('');
+        $.get("<?= base_url('Skill/get/all') ?>", function (result) {
+          $('#skill').html(result);
         });        
     }
 
-	function detail_superhero(id)
+	function detail_skill(id)
 	{
         $('#content_load').html('');
-		$('#superhero').hide();
-        $.get("<?= base_url('Superhero/get/') ?>"+id, function (result) {
+		$('#skill').hide();
+        $.get("<?= base_url('Skill/get/') ?>"+id, function (result) {
           $('#content_load').html(result);
         });
 	}
@@ -99,16 +99,16 @@
 	function back()
 	{
         $('#content_load').html('');
-		$('#superhero').show();
-        get_superhero();
+		$('#skill').show();
+        get_skill();
 	}
 
-	function hapus_superhero(id){
+	function hapus_skill(id){
 		if (confirm('yakin ingin hapus data?')) {
-	        $.get("<?= base_url('Superhero/delete/') ?>"+id, function (result) {
+	        $.get("<?= base_url('Skill/delete/') ?>"+id, function (result) {
 	        	result = JSON.parse(result);
 	        	if(result.status == 20){
-                    detail_superhero(result.id);
+                    detail_skill(result.id);
 	        	}
 	        	else{
 	        		alert(result.message);	        		
@@ -122,7 +122,7 @@
     function form_tambah_skill(id)
     {
         $('#content_load').html('');
-        $.get("<?= base_url('Superhero/add_skill/') ?>"+id, function (result) {
+        $.get("<?= base_url('Skill/add_skill/') ?>"+id, function (result) {
           $('#content_load').html(result);
         });
 
