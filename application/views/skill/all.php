@@ -49,7 +49,6 @@
 	                        <td><?= $baris->nama_skill ?></td>
 	                        <td>
 	                            <a href="#" class="btn btn-primary" onclick="detail_skill(<?= $baris->id ?>)">View Detail</a>
-	                            <button class="btn btn-danger" onclick="hapus_skill(<?= $baris->id ?>)">Hapus</button>
 	                        </td>
 	                    </tr>
                     	<?php

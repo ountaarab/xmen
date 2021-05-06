@@ -107,8 +107,10 @@
 		if (confirm('yakin ingin hapus data?')) {
 	        $.get("<?= base_url('Skill/delete/') ?>"+id, function (result) {
 	        	result = JSON.parse(result);
+                alert(result.message);
 	        	if(result.status == 20){
-                    detail_skill(result.id);
+                    $('#content_load').html('');
+                    back();
 	        	}
 	        	else{
 	        		alert(result.message);	        		
@@ -119,10 +121,10 @@
 		}
 	}
 
-    function form_tambah_skill(id)
+    function form_tambah_hero(id)
     {
         $('#content_load').html('');
-        $.get("<?= base_url('Skill/add_skill/') ?>"+id, function (result) {
+        $.get("<?= base_url('Skill/add_hero/') ?>"+id, function (result) {
           $('#content_load').html(result);
         });
 
