@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Superhero extends CI_Controller {
+class Superhero extends CI_Controller
+{
 
 	public function index()
 	{
@@ -9,26 +10,34 @@ class Superhero extends CI_Controller {
 	}
 
 	public function get($id = null)
-	{		
-		if($id == 'all'):
-			$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', 'id is not null');			
+	{
+		if ($id == 'all') :
+			$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', 'id is not null');
 			$this->load->view('superhero/all', $data);
-		else:
-			$data['detail'] = $this->DataHandle->getAllWhere('ms_superhero', '*', array('id'=>$id))->row_array();
-			$data['skill'] = $this->DataHandle->getAllWhere('v_skill_superhero', '*', array('id_superhero'=>$id));
-	        $this->load->view('superhero/detail', $data);
-       	endif;
+		elseif ($id != null) :
+			$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', "nama LIKE '%" . urldecode($id) . "%'");
+			$this->load->view('superhero/all', $data);
+		else :
+			$data['detail'] = $this->DataHandle->getAllWhere('ms_superhero', '*', array('id' => $id))->row_array();
+			$data['skill'] = $this->DataHandle->getAllWhere('v_skill_superhero', '*', array('id_superhero' => $id));
+			$this->load->view('superhero/detail', $data);
+		endif;
 	}
 
-	public function delete($id=null)
+	public function search($kata)
 	{
-		$data=['id'=>$id];
-		if($this->DataHandle->delete('ms_superhero', $data)):
+		echo json_encode($kata);
+	}
+
+	public function delete($id = null)
+	{
+		$data = ['id' => $id];
+		if ($this->DataHandle->delete('ms_superhero', $data)) :
 			$response = [
 				'status' => 20,
 				'message' => 'data berhasil dihapus',
 			];
-		else:
+		else :
 			$response = [
 				'status' => 0,
 				'message' => 'data gagal dihapus',
@@ -41,18 +50,18 @@ class Superhero extends CI_Controller {
 	public function edit()
 	{
 		$input = $this->input->post();
-		if($input['nama'] == null):
+		if ($input['nama'] == null) :
 			$response = [
-				'status'=>0,
-				'message'=>'Maaf nama superhero tidak boleh kosong!',
+				'status' => 0,
+				'message' => 'Maaf nama superhero tidak boleh kosong!',
 			];
 			echo json_encode($response);
 			die;
 		endif;
-		if($input['jk'] == null):
+		if ($input['jk'] == null) :
 			$response = [
-				'status'=>0,
-				'message'=>'Maaf jenis kelamin superhero tidak boleh kosong!',
+				'status' => 0,
+				'message' => 'Maaf jenis kelamin superhero tidak boleh kosong!',
 			];
 			echo json_encode($response);
 
@@ -60,25 +69,25 @@ class Superhero extends CI_Controller {
 		endif;
 
 		$data = [
-			'nama'=>$input['nama'],
-			'jk'=>$input['jk'],
+			'nama' => $input['nama'],
+			'jk' => $input['jk'],
 		];
 
 		$kondisi = [
-			'id'=>$input['id'],
+			'id' => $input['id'],
 		];
 
-		if($this->DataHandle->update('ms_superhero', $data, $kondisi)):
+		if ($this->DataHandle->update('ms_superhero', $data, $kondisi)) :
 			$response = [
-				'status'=>20,
-				'id'=>$input['id'],
-				'message'=>'Update data berhasil',
-			];			
-		else:
+				'status' => 20,
+				'id' => $input['id'],
+				'message' => 'Update data berhasil',
+			];
+		else :
 			$response = [
-				'status'=>0,
-				'message'=>'Update data gagal :(',
-			];			
+				'status' => 0,
+				'message' => 'Update data gagal :(',
+			];
 
 		endif;
 
@@ -87,18 +96,18 @@ class Superhero extends CI_Controller {
 
 	public function add_skill($id)
 	{
-		$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', 'id is not null');	
-		$data['detail'] = $this->DataHandle->getAllWhere('ms_superhero', '*', array('id'=>$id))->row_array();
+		$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', 'id is not null');
+		$data['detail'] = $this->DataHandle->getAllWhere('ms_superhero', '*', array('id' => $id))->row_array();
 		$this->load->view('superhero/add_skill', $data);
 	}
 
 	public function add_skill_proses()
 	{
 		$input = $this->input->post();
-		if($input['id_skill'] == null):
+		if ($input['id_skill'] == null) :
 			$response = [
-				'status'=>0,
-				'message'=>'Maaf skill tidak boleh kosong!',
+				'status' => 0,
+				'message' => 'Maaf skill tidak boleh kosong!',
 			];
 			echo json_encode($response);
 			die;
@@ -107,31 +116,31 @@ class Superhero extends CI_Controller {
 		$id_superhero = $input['id_superhero'];
 		$id_skill = $input['id_skill'];
 
-		$cek = $this->DataHandle->getAllWhere('tr_skill', '*', ['id_superhero'=>$id_superhero, 'id_skill'=>$id_skill])->num_rows();
-		if($cek > 0):
+		$cek = $this->DataHandle->getAllWhere('tr_skill', '*', ['id_superhero' => $id_superhero, 'id_skill' => $id_skill])->num_rows();
+		if ($cek > 0) :
 			$response = [
-				'status'=>0,
-				'message'=>'Maaf skill sudah pernah ada!',
+				'status' => 0,
+				'message' => 'Maaf skill sudah pernah ada!',
 			];
 			echo json_encode($response);
-			die;			
+			die;
 		endif;
 
 		$data = [
-			'id_superhero'=>$id_superhero,
-			'id_skill'=>$id_skill,
+			'id_superhero' => $id_superhero,
+			'id_skill' => $id_skill,
 		];
 
-		if($this->DataHandle->insert('tr_skill', $data)):
+		if ($this->DataHandle->insert('tr_skill', $data)) :
 			$response = [
-				'status'=>20,
-				'message'=>'input skill berhasil',
-			];			
-		else:
+				'status' => 20,
+				'message' => 'input skill berhasil',
+			];
+		else :
 			$response = [
-				'status'=>0,
-				'message'=>'input skill gagal :(',
-			];			
+				'status' => 0,
+				'message' => 'input skill gagal :(',
+			];
 
 		endif;
 
@@ -140,19 +149,19 @@ class Superhero extends CI_Controller {
 
 	public function delete_skill($id = null)
 	{
-		$data=['id'=>$id];
-		if($this->DataHandle->delete('tr_skill', $data)):
+		$data = ['id' => $id];
+		if ($this->DataHandle->delete('tr_skill', $data)) :
 			$response = [
 				'status' => 20,
 				'message' => 'skill berhasil dihapus',
 			];
-		else:
+		else :
 			$response = [
 				'status' => 0,
 				'message' => 'skill gagal dihapus',
 			];
 		endif;
 
-		echo json_encode($response);		
+		echo json_encode($response);
 	}
 }
