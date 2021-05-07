@@ -9,24 +9,22 @@ class Superhero extends CI_Controller
 		$this->load->view('superhero/index');
 	}
 
+	public function search($id)
+	{
+		$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', "nama LIKE '%" . urldecode($id) . "%'");
+		$this->load->view('superhero/all', $data);
+	}
+
 	public function get($id = null)
 	{
 		if ($id == 'all') :
 			$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', 'id is not null');
-			$this->load->view('superhero/all', $data);
-		elseif ($id != null) :
-			$data['superhero'] = $this->DataHandle->getAllWhere('ms_superhero', '*', "nama LIKE '%" . urldecode($id) . "%'");
 			$this->load->view('superhero/all', $data);
 		else :
 			$data['detail'] = $this->DataHandle->getAllWhere('ms_superhero', '*', array('id' => $id))->row_array();
 			$data['skill'] = $this->DataHandle->getAllWhere('v_skill_superhero', '*', array('id_superhero' => $id));
 			$this->load->view('superhero/detail', $data);
 		endif;
-	}
-
-	public function search($kata)
-	{
-		echo json_encode($kata);
 	}
 
 	public function delete($id = null)

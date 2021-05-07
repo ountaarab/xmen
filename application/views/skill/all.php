@@ -73,7 +73,7 @@
         let cari = $('#search').val();
 
         $('#skill').html('');
-        $.get("<?= base_url('Skill/get/') ?>" + cari, function(result) {
+        $.get("<?= base_url('Skill/search/') ?>" + cari, function(result) {
             $('#skill').html(result);
         });
     }

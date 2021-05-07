@@ -9,14 +9,20 @@ class Skill extends CI_Controller
 		$this->load->view('skill/index');
 	}
 
+	public function search($id)
+	{
+		$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', "nama_skill LIKE '%" . urldecode($id) . "%'");
+		$this->load->view('skill/all', $data);
+	}
+
 	public function get($id = null)
 	{
 		if ($id == 'all') :
 			$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', 'id is not null');
 			$this->load->view('skill/all', $data);
-		elseif ($id != null) :
-			$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', "nama_skill LIKE '%" . urldecode($id) . "%'");
-			$this->load->view('skill/all', $data);
+		// elseif ($id != null) :
+		// 	$data['skill'] = $this->DataHandle->getAllWhere('ms_skill', '*', "nama_skill LIKE '%" . urldecode($id) . "%'");
+		// 	$this->load->view('skill/all', $data);
 		else :
 			$data['detail'] = $this->DataHandle->getAllWhere('ms_skill', '*', array('id' => $id))->row_array();
 			$data['heroes'] = $this->DataHandle->getAllWhere('v_skill_superhero', '*', array('id_skill' => $id));

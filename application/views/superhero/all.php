@@ -84,7 +84,7 @@
         let cari = $('#search').val();
 
         $('#superhero').html('');
-        $.get("<?= base_url('Superhero/get/') ?>" + cari, function(result) {
+        $.get("<?= base_url('Superhero/search/') ?>" + cari, function(result) {
             $('#superhero').html(result);
         });
     }
